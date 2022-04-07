@@ -20,8 +20,7 @@ namespace CinemaAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
-
-            services.AddDbContext<FilmeContext>(opts => opts.UseMySQL(Configuration.GetConnectionString("cinemaConnection")));
+            services.AddDbContext<AppDbContext>(opts => opts.UseLazyLoadingProxies().UseMySQL(Configuration.GetConnectionString("cinemaConnection")));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -34,8 +33,6 @@ namespace CinemaAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CinemaAPI v1"));
             }
 
             app.UseHttpsRedirection();
