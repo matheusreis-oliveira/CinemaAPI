@@ -29,7 +29,7 @@ namespace UsuariosApi.Data
                 NormalizedEmail = "ADMIN@ADMIN.COM",
                 EmailConfirmed = true,
                 SecurityStamp = Guid.NewGuid().ToString(),
-                Id = int.MaxValue
+                Id = 99999
             };
 
             PasswordHasher<CustomIdentityUserModel> hasher = new PasswordHasher<CustomIdentityUserModel>();
