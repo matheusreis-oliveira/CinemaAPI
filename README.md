@@ -1,7 +1,7 @@
 ﻿
 # Olá 😎
 
-Hoje trago um projeto de uma API Rest utilizado .NET e varias tecnologias que a biblioteca proporciona,
+Hoje trago um projeto de uma API Rest utilizado .NET com varias bibliotecas para o auxilio de sua criação.
 
 ## Tecnologias Usadas
 > .NET 5.0
