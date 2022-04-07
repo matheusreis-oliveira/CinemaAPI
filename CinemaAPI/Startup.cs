@@ -20,7 +20,9 @@ namespace CinemaAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AppDbContext>(opts => opts.UseLazyLoadingProxies().UseMySQL(Configuration.GetConnectionString("cinemaConnection")));
+            //services.AddDbContext<AppDbContext>(opts => opts.UseLazyLoadingProxies().UseMySQL(Configuration.GetConnectionString("cinemaConnection")));
+            services.AddDbContext<AppDbContext>(opt => opt.UseInMemoryDatabase("cinemaDB"));
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

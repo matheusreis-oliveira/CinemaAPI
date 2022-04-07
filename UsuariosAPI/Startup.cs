@@ -23,7 +23,8 @@ namespace UsuariosAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<UserDbContext>(options => options.UseMySQL(Configuration.GetConnectionString("usuarioConnection")));
+            //services.AddDbContext<UserDbContext>(options => options.UseMySQL(Configuration.GetConnectionString("usuarioConnection")));
+            services.AddDbContext<UserDbContext>(opt => opt.UseInMemoryDatabase("userDB"));
 
             services.AddIdentity<IdentityUser<int>, IdentityRole<int>>(opt => { opt.SignIn.RequireConfirmedEmail = true; }).AddEntityFrameworkStores<UserDbContext>().AddDefaultTokenProviders();
 
