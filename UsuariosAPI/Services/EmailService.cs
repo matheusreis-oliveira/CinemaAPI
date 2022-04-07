@@ -15,11 +15,9 @@ namespace UsuariosApi.Services
             _configuration = configuration;
         }
 
-        public void EnviarEmail(string[] destinatario, string assunto,
-            int usuarioId, string code)
+        public void EnviarEmail(string[] destinatario, string assunto, int usuarioId, string code)
         {
-            MensagemModel mensagem = new MensagemModel(destinatario,
-                assunto, usuarioId, code);
+            MensagemModel mensagem = new MensagemModel(destinatario, assunto, usuarioId, code);
             var mensagemDeEmail = CriaCorpoDoEmail(mensagem);
             Enviar(mensagemDeEmail);
         }
@@ -44,7 +42,7 @@ namespace UsuariosApi.Services
                 finally
                 {
                     client.Disconnect(true);
-                    client.Dispose();
+                    client.Dispose(); //using ja implementa dispose?
                 }
             }
         }
@@ -52,8 +50,7 @@ namespace UsuariosApi.Services
         private MimeMessage CriaCorpoDoEmail(MensagemModel mensagem)
         {
             var mensagemDeEmail = new MimeMessage();
-            mensagemDeEmail.From.Add(new MailboxAddress(
-                _configuration.GetValue<string>("EmailSettings:From")));
+            mensagemDeEmail.From.Add(new MailboxAddress(_configuration.GetValue<string>("EmailSettings:From")));
             mensagemDeEmail.To.AddRange(mensagem.Destinatario);
             mensagemDeEmail.Subject = mensagem.Assunto;
             mensagemDeEmail.Body = new TextPart(MimeKit.Text.TextFormat.Text)

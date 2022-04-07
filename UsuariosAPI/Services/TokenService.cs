@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
@@ -10,16 +9,18 @@ namespace UsuariosApi.Services
 {
     public class TokenService
     {
-        public TokenModel CreateToken(IdentityUser<int> usuario)
+        public TokenModel CreateToken(CustomIdentityUserModel usuario, string role)
         {
             Claim[] direitosUsuario = new Claim[]
             {
                 new Claim("username", usuario.UserName),
-                new Claim("id", usuario.Id.ToString())
+                new Claim("id", usuario.Id.ToString()),
+                new Claim(ClaimTypes.Role, role),
+                new Claim(ClaimTypes.DateOfBirth, usuario.DataNascimento.ToString())
             };
 
             var chave = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes("4adfsf78asd*f1sa6d5d21as89dqw7dq51")
+                Encoding.UTF8.GetBytes("0asdjas09djsa09djasdjsadajsd09asjd09sajcnzxn")
                 );
             var credenciais = new SigningCredentials(chave, SecurityAlgorithms.HmacSha256);
 

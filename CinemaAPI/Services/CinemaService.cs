@@ -29,9 +29,9 @@ namespace CinemaAPI.Services
             if (!string.IsNullOrEmpty(nomeDoFilme))
             {
                 IEnumerable<CinemaModel> query = from cinema in cinemas
-                                                 where cinema.Sessoes.Any(sessao =>
-                                                 sessao.Filme.Titulo == nomeDoFilme)
-                                                 select cinema;
+                                            where cinema.Sessoes.Any(sessao =>
+                                            sessao.Filme.Titulo == nomeDoFilme)
+                                            select cinema;
 
                 cinemas = query.ToList();
             }

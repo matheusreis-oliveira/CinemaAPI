@@ -1,6 +1,8 @@
 using CinemaAPI.Data;
 using CinemaAPI.Services;
+using CinemaAPI.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -38,6 +40,16 @@ namespace CinemaAPI
                         ClockSkew = TimeSpan.Zero
                     };
                 });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("IdadeMinima", policy =>
+                {
+                    policy.Requirements.Add(new IdadeMinimaRequirement(18));
+                });
+            });
+
+            services.AddSingleton<IAuthorizationHandler, IdadeMinimaHandler>();
 
             services.AddControllers();
 

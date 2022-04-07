@@ -12,13 +12,14 @@ namespace UsuariosApi.Services
 {
     public class CadastroService
     {
+
         private IMapper _mapper;
-        private UserManager<IdentityUser<int>> _userManager;
+        private UserManager<CustomIdentityUserModel> _userManager;
         private EmailService _emailService;
 
         public CadastroService(IMapper mapper,
-            UserManager<IdentityUser<int>> userManager,
-            EmailService emailService)
+            UserManager<CustomIdentityUserModel> userManager,
+            EmailService emailService, RoleManager<IdentityRole<int>> roleManager)
         {
             _mapper = mapper;
             _userManager = userManager;
@@ -28,9 +29,10 @@ namespace UsuariosApi.Services
         public Result CadastraUsuario(CreateUsuarioDto createDto)
         {
             UsuarioModel usuario = _mapper.Map<UsuarioModel>(createDto);
-            IdentityUser<int> usuarioIdentity = _mapper.Map<IdentityUser<int>>(usuario);
+            CustomIdentityUserModel usuarioIdentity = _mapper.Map<CustomIdentityUserModel>(usuario);
             Task<IdentityResult> resultadoIdentity = _userManager
                 .CreateAsync(usuarioIdentity, createDto.Password);
+            _userManager.AddToRoleAsync(usuarioIdentity, "regular");
             if (resultadoIdentity.Result.Succeeded)
             {
                 var code = _userManager
@@ -45,6 +47,7 @@ namespace UsuariosApi.Services
             return Result.Fail("Falha ao cadastrar usuário");
 
         }
+
         public Result AtivaContaUsuario(AtivaContaRequest request)
         {
             var identityUser = _userManager
