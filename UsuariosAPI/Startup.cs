@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
 using UsuariosApi.Data;
+using UsuariosApi.Models;
 using UsuariosApi.Services;
 
 namespace UsuariosAPI
@@ -26,7 +27,7 @@ namespace UsuariosAPI
             //services.AddDbContext<UserDbContext>(options => options.UseMySQL(Configuration.GetConnectionString("usuarioConnection")));
             services.AddDbContext<UserDbContext>(opt => opt.UseInMemoryDatabase("userDB"));
 
-            services.AddIdentity<IdentityUser<int>, IdentityRole<int>>(opt => { opt.SignIn.RequireConfirmedEmail = true; }).AddEntityFrameworkStores<UserDbContext>().AddDefaultTokenProviders();
+            services.AddIdentity<CustomIdentityUserModel, IdentityRole<int>>(opt => { opt.SignIn.RequireConfirmedEmail = true; }).AddEntityFrameworkStores<UserDbContext>().AddDefaultTokenProviders();
 
             services.AddControllers();
 
